@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/home/blissful/scripts/hanping-pivot/.venv/bin/python
 
 """
 Maintains the Hanping Chinese - Writing deck, a clone of the Hanping Chinese deck but with an
