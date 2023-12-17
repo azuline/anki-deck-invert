@@ -3,12 +3,9 @@
 """
 Maintains the Hanping Chinese - Writing deck, a clone of the Hanping Chinese deck but with an
 inverted card type for writing.
-
-This script modifies the Anki SQL database directly and upserts cards into the inverted deck.
 """
 
 import string
-from pprint import pprint
 import time
 import re
 import random
@@ -68,14 +65,12 @@ for row in cursor:
     base_note_id = row[0]
     base_note_desc = re.sub("<[^<]+?>", "", row[1]).replace("\x1f", " ")
 
-    base_note = col.get_note(base_note_id)
-
-    new_note = base_note
-    new_note.id = NoteId(0)
-    new_note.guid = guid64()
-    new_note.mid = NotetypeId(WRITING_NOTETYPE_ID)
-    new_note.mod = int(time.time())
-    new_note.usn = col.db.scalar("select usn from col")
+    note = col.get_note(base_note_id)
+    note.id = NoteId(0)
+    note.guid = guid64()
+    note.mid = NotetypeId(WRITING_NOTETYPE_ID)
+    note.mod = int(time.time())
+    note.usn = col.db.scalar("select usn from col")
 
     print(f"Inserting clone of {base_note_desc}")
-    col.add_note(new_note, DeckId(INVERTED_DECK_ID))
+    col.add_note(note, DeckId(INVERTED_DECK_ID))
