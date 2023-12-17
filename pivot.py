@@ -54,6 +54,11 @@ cursor = col.db.all(
             FROM notes
             WHERE mid = {WRITING_NOTETYPE_ID}
         )
+        OR csum IN (
+            SELECT csum
+            FROM notes
+            WHERE mid = {WRITING_NOTETYPE_ID}
+        )
     )
     SELECT id, flds
     FROM notes
